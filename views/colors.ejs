@@ -1,0 +1,16 @@
+<!-- <%= colors %> -->
+<style>
+  .color {
+    height: 50px;
+    width: 50px;
+  }
+</style>
+
+<% Object.keys(colors).forEach((key, index) => { %>
+  <!-- <%= JSON.stringify(colors[key]) %> -->
+  <% if (colors[key] && colors[key]._rgb) { %>
+    <% rgb = colors[key]._rgb %>
+    Color #<%= index + 1 %> 
+    <div class="color" style="background-color: rgb(<%= rgb[0] %>, <%= rgb[1] %>, <%= rgb[2] %>"></div>
+  <% } %>
+<% }) %>

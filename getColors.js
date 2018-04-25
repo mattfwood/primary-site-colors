@@ -1,11 +1,14 @@
 const Vibrant = require('node-vibrant');
 
-const getColors = (filePath) => {
-  const vibrant = new Vibrant(filePath);
+const getColors = filePath => {
+  return new Promise((resolve, reject) => {
+    const vibrant = new Vibrant(filePath);
 
-  vibrant.getPalette((err, palette) => {
-    if (err) throw err;
-    console.log(palette);
+    vibrant.getPalette((err, palette) => {
+      if (err) reject(err);
+      // return palette;
+      resolve(palette);
+    });
   });
 };
 
