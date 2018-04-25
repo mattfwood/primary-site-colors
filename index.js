@@ -1,9 +1,13 @@
+const path = require('path');
 const express = require('express');
-const getScreenshot = require('./getScreenshot');
-const getColors = require('./getColors');
+const PORT = process.env.PORT || 5000;
 const app = express();
 
+const getScreenshot = require('./getScreenshot');
+const getColors = require('./getColors');
+
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.get('/', (req, res) => {
   const { url } = req.query;
@@ -22,4 +26,4 @@ app.get('/', (req, res) => {
     .catch(console.log);
 });
 
-app.listen(3000, () => console.log('App running on port 3000!'));
+app.listen(PORT, () => console.log(`App running on port ${PORT}!`));
