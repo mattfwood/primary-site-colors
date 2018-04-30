@@ -9,21 +9,20 @@ const getColors = require('./getColors');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.get('/', (req, res) => {
-  const { url } = req.query;
-  getScreenshot(url, 'screenshot.png', {
-    height: 667,
-    width: 375,
-    isMobile: true
-  })
-    .then(() => {
-      return getColors('./screenshot.png');
-    })
-    .then(colors => {
-      console.log(colors);
-      res.render('colors', { colors: colors });
-    })
-    .catch(console.log);
+app.get('/', async (req, res) => {
+  try {
+    const { url } = req.query;
+    const timestamp = Date.now();
+    await getScreenshot(url, `${timestamp}.png`, {
+      height: 800,
+      width: 1280,
+    });
+
+    const colors = await getColors(`${timestamp}.png`)
+    res.render('colors', { colors: colors });
+  } catch (error) {
+    throw new Error(error);
+  }
 });
 
 app.listen(PORT, () => console.log(`App running on port ${PORT}!`));
