@@ -19,5 +19,13 @@
   height: 50px;
   width: 50px;
   border: #999;
-  margin: 5px 20px;
+  margin: 5px 40px;
+}
+
+.color-swatch: hover {
+  cursor: pointer;
+}
+
+.hex-code {
+  text-align: center;
 }

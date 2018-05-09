@@ -1,8 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 import ReactLoading from 'react-loading';
-import './App.css';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+import './App.css';
 
 const rgbHex = require('rgb-hex');
 
@@ -48,7 +50,10 @@ class App extends Component {
 
       console.log(colors);
 
-      this.setState({ colors, loading: false });
+      this.setState({
+        colors,
+        loading: false,
+      });
     } catch (error) {
       throw new Error(error);
     }
@@ -75,20 +80,29 @@ class App extends Component {
           <Button disabled={loading}>Get Key Colors</Button>
         </Form>
         {loading && <ReactLoading type="cylon" color="#000" />}
+        {!loading && colors.length > 0 && <div>(Click Color to Copy Hex Code to Clipboard)</div>}
         <div className="color-section">
           {colors.map(color => {
             const colorCode = color._rgb.join(', ');
+            const rgb = color._rgb.map(color => parseInt(color, 10));
             return (
               <div>
                 <div className="hex-code">
-                  #{rgbHex(...color._rgb)}
+                  <div>
+                    {`#${rgbHex(...color._rgb)}`}
+                  </div>
+                  <div>
+                    rgb{rgb.join(', ')}
+                  </div>
                 </div>
-                <div
-                  className="color-swatch"
-                  style={{
-                    backgroundColor: `rgb(${colorCode})`,
-                  }}
-                />
+                <CopyToClipboard text={`#${rgbHex(...color._rgb)}`}>
+                  <div
+                    className="color-swatch"
+                    style={{
+                      backgroundColor: `rgb(${colorCode})`,
+                    }}
+                  />
+                </CopyToClipboard>
                 <div>{color.type}</div>
               </div>
             );
