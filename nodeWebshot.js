@@ -15,7 +15,7 @@ function getScreenshot(url, fileName) {
       //   + ' AppleWebKit/531.21.20 (KHTML, like Gecko) Mobile/7B298g'
     };
 
-    webshot(url, `${fileName}.png`, options, function (error) {
+    webshot(url, `./screenshots/${fileName}.png`, options, function (error) {
       if (error) reject(new Error(error));
       resolve(fileName);
     });
